@@ -13,6 +13,10 @@
 <body class="{{- if .IsHome }}home{{- end }}{{- with .File }} page-{{- .ContentBaseName }}{{- end }}">
     {{ partial "header.html" . }}
 
+    {{- if .Site.Params.particles }}
+        <div id="particles-js"></div>
+    {{ end }}
+
     <main class="container">
         {{ block "main" . }}{{ end }}
     </main>

@@ -33,3 +33,10 @@
 {{- if $vercelAnalytics }} 
 <script defer src="/_vercel/insights/script.js"></script>
 {{- end }}
+
+<!-- particles -->
+{{- if .Site.Params.particles }}
+{{- $particlesJs := resources.Get "js/vendor/particles.js" | fingerprint | resources.Copy "/assets/js/vendor/particles.js" }}
+<script defer src="{{ $particlesJs.RelPermalink }}"></script>
+<script defer src='{{ "js/loadParticles.js" | absURL }}'></script>
+{{- end }}

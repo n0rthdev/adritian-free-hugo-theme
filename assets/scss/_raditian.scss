@@ -1754,3 +1754,17 @@ sup {
 [type="search"] {
     -webkit-appearance: none;
 }
+
+:root {
+    --particle-color: #{$base-color};
+    --particle-line-color: #{$base-color};
+}
+
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-repeat: np-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
