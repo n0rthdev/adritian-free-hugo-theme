@@ -40,3 +40,7 @@
   [[module.mounts]]
     source = "node_modules/bootstrap-print-css/css/bootstrap-print.css"
     target = "assets/css/bootstrap-print.css"
+
+  [[module.mounts]]
+    source = "node_modules/particles.js/particles.js"
+    target = "assets/js/vendor/particles.js"

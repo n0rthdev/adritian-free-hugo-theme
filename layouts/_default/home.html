@@ -36,6 +36,10 @@
 {{ end }}
 <body class="{{ if .IsHome }}home{{ end }}">
 
+    {{- if .Site.Params.particles }}
+      <div id="particles-js"></div>
+    {{ end }}
+
 	{{ partial "header.html" . }}
 
     {{ $home := where (where .Site.Pages "Type" "home") "Lang" .Lang }}
