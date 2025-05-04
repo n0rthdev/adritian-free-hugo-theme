@@ -11,9 +11,10 @@ draft = false
     description="Texte en <strong>gras</strong> et normal. Ceci provient de <code>home.md</code>. Non fourni ? i18n par défaut (pour compatibilité versions >1.7.0)"
     imgSrc="images/showcase/showcase.png"
     imgScale="0.5"
+    sectionId="section-vedette"
 >}}
 
-{{< platform-links >}}
+{{< platform-links sectionId="liens-plateforme" >}}
     {{< link icon="square-facebook" url="https://facebook.com/yourpage" >}}
     {{< link icon="square-twitter" url="https://twitter.com/yourpage" >}}
     {{< link icon="linkedin" url="https://www.linkedin.com/in/adrianmoreno/" >}}
@@ -45,10 +46,12 @@ draft = false
     button_url="https://www.google.com"
     imgSrc="images/about/user-picture.png"
     imgScale="0.5"
+    sectionId="a-propos"
 >}}
 
 {{< education-list
-    title="Formation académique" >}}
+    title="Formation académique"
+    sectionId="formation-academique" >}}
 
 {{< experience-section
     title="Mon expérience professionnelle (section)"
@@ -60,6 +63,7 @@ draft = false
     button2_text="Autre Bouton (2)"
     button3_text="Tout voir"
     button3_url="/es/experience"
+    sectionId="experience-professionnelle"
 >}}
 
 ## Expérience (liste)
@@ -67,49 +71,9 @@ draft = false
 Vous pouvez voir une autre version, utilisant `experience-list` sur [/cv](/cv).
 
 {{< client-and-work-section
-    title="Une sélection de mon travail" >}}
+    title="Une sélection de mon travail"
+    sectionId="travail" >}}
 
 {{< testimonial-section
-    title="Ce que l’on dit de moi" >}}
-
-{{< contact-section
-    title="Contact"
-    contact_form_name="Votre nom ?"
-    contact_form_email="Votre adresse e-mail"
-    contact_form_message="Votre message"
-    contact_button="Envoyer"
-    contact_phone_title="Mon téléphone"
-    contact_phone_number="<a href='tel:+555666777'>555 666 777</a>"
-    contact_email_title="Mon e-mail"
-    contact_email_email="demo@demosite.com"
-    contact_address_title="Mon emplacement"
-    contact_address_address="🇩🇰 Danemark"
-    form_action="/"
-    form_method="POST"
->}}
-
-{{< newsletter-section
-    newsletter_title="Restez informé"
-    newsletter_placeholder="Entrez votre e-mail"
-    newsletter_button="S'abonner"
-    newsletter_success_message="Merci pour votre inscription !"
-    newsletter_error_message="Une erreur s’est produite, veuillez réessayer."
-    newsletter_note="Nous respectons votre vie privée et ne partagerons pas vos données."
-    form_action="/"
-    form_method="POST"
->}}
-
-Contenu supplémentaire après les blocs `section` :
-
-```
-sections = [
-  "showcase",
-  "about",
-  "education",
-  "experience",
-  "client-and-work",
-  "testimonial",
-  "contact",
-  "newsletter",
-]
-```
+    title="Ce que l’on dit de moi"
+    sectionId="temoignages" >}}
