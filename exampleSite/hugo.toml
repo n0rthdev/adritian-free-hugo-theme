@@ -2,8 +2,21 @@ baseURL = "https://adritian-demo.vercel.app/"
 title = "Adritian Demo"
 languageCode = "en"
 
-[markup.goldmark.renderer]
-unsafe = true
+# Exclude footer section from generating list pages (index.html and index.xml)
+[outputs]
+  page = ["HTML"]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+  footer = []
+
+# Explicitly prevent the footer section from generating any output
+[outputFormats.footerSection]
+  # Empty configuration to prevent any output
+
+# Specifically disable generation of these kinds for the footer content
+disableKinds = ["footerSection", "RSS"]
 
 [module]
 [[module.imports]]
@@ -88,7 +101,10 @@ code = "GTM-XXXXX"
 enabled = false
 
 [build]
+writeStats = true
+
 [build.buildStats]
+enabledFor = ["scss"]
 disableClasses = false
 disableIDs = false
 disableTags = false
@@ -118,9 +134,13 @@ name = 'About'
 URL = '#about'
 weight = 2
 [[languages.en.menus.header]]
+name = 'Skills'
+URL = '/skills'
+weight = 3
+[[languages.en.menus.header]]
 name = 'Portfolio'
 URL = '#portfolio'
-weight = 3
+weight = 4
 #  [[languages.en.menus.header]]
 #  name = "Experience"
 #  URL = "#experience"
@@ -132,9 +152,16 @@ URL = "/blog"
 weight = 5
 
 [[languages.en.menus.header]]
-name = "Contact"
+pre = "email"
+name = "email"
 URL = "#contact"
 weight = 6
+
+[[languages.en.menus.header]]
+pre = "search"
+name = "Search"
+URL = "/search"
+weight = 7
 
 [[languages.en.menus.footer]]
 name = "Home"
@@ -166,16 +193,20 @@ title = ''
 weight = 0
 [[languages.es.menus.header]]
 name = "INICIO"
-URL = "/"
+URL = "/es/"
 weight = 1
 [[languages.es.menus.header]]
 name = 'Sobre mi'
-URL = '/es/#about'
+URL = '/es/#sobre-mi'
 weight = 2
 [[languages.es.menus.header]]
-name = 'Portfolio'
-URL = '/es/#portfolio'
+name = 'Habilidades'
+URL = '/es/skills'
 weight = 3
+[[languages.es.menus.header]]
+name = 'Trabajo'
+URL = '/es/#trabajo'
+weight = 4
 
 #  [[languages.es.menus.header]]
 #  name = "Experiencia"
@@ -188,9 +219,16 @@ URL = "/es/blog"
 weight = 5
 
 [[languages.es.menus.header]]
+pre = "email"
 name = "Contacto"
-URL = "/es/#contact"
+URL = "/es/#contacto"
 weight = 6
+
+[[languages.es.menus.header]]
+pre = "search"
+name = "Buscar"
+URL = "/search"
+weight = 7
 
 [[languages.es.menus.footer]]
 name = "INICIO"
@@ -230,9 +268,13 @@ name = 'About'
 URL = '#about'
 weight = 2
 [[languages.fr.menus.header]]
+name = 'Compétences'
+URL = '/fr/skills'
+weight = 3
+[[languages.fr.menus.header]]
 name = 'Portfolio'
 URL = '#portfolio'
-weight = 3
+weight = 4
 #  [[languages.fr.menus.header]]
 #  name = "Experience"
 #  URL = "#experience"
@@ -244,10 +286,16 @@ URL = "/blog"
 weight = 5
 
 [[languages.fr.menus.header]]
+pre = "email"
 name = "Contact"
 URL = "#contact"
 weight = 6
 
+[[languages.fr.menus.header]]
+pre = "search"
+name = "Recherche"
+URL = "/search"
+weight = 7
 [[languages.fr.menus.footer]]
 name = "ACCUEIL"
 URL = "/fr/"
@@ -314,14 +362,52 @@ header = false
 mobileHeader = false
 ## by default we allow override AND automatic selection
 
+# Page transition settings
+[params.pageTransition]
+enabled = true  # Set to false to disable the page fade transition effect
+
 [params.blog]
-layout = "default"     # options: default, sidebar
+layout = "sidebar-right"     # options: default (no sidebar), sidebar, sidebar-right
 sidebarWidth = "25"    # percentage width of the sidebar
 showCategories = true
 showRecentPosts = true
 recentPostCount = 5
 listStyle = "summary"  # options: simple, summary
+featured_sort_by_weight = true
+featured_sort_by_date = false
 
 
 [params.experience]
 showJobCard = true # Set to false to hide the job card
+
+
+# Performance optimizations
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    lineNos = false
+    style = "github"
+
+[imaging]
+  resampleFilter = "Lanczos"
+  quality = 85
+  anchor = "Smart"
+
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+  minifyOutput = true
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepDefaultAttrVals = true
+      keepWhitespace = false
+    [minify.tdewolff.css]
+      precision = 0
+    [minify.tdewolff.js]
+      precision = 0
