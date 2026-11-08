@@ -3,12 +3,18 @@ title: 'Create your own version of the site'
 date: 2025-02-11T14:38:33+02:00
 draft: false
 type: 'blog'
+featured: true
+weight: 10
 tags: 
   - adritian
   - guide
+images:
+  featured_image: '/img/blog/A minimalistic representation of creating a personal website, focusing on clean lines, subtle geometric shapes, and a modern web development aesthetic.png'
 ---
 
 This article is a guide to help you create your own version of the site using [Adritian](https://github.com/zetxek/adritian-free-hugo-theme). It will cover the main steps to get started with the theme, and how to customize it to your needs.
+
+{{< responsive-image src="images/experience/internet-affairs.png" alt="Adritian theme demo" sizes="(max-width: 768px) 100vw, 600px" >}}
 
 ### Creating a site
 
@@ -55,12 +61,13 @@ Once you have a site created, you can add the theme to your site by following th
 
 ```
 baseURL = "<your website url>"
-languageCode = "en"
+locale = "en"
 
 [module]
 [module.hugoVersion]
-# We use hugo.Deps to list dependencies, which was added in Hugo 0.92.0
-min = "0.92.0"
+# The theme needs Hugo extended 0.158.0+ (for the locale, direction and label language keys)
+extended = true
+min = "0.158.0"
 
 [[module.imports]]
 path="github.com/zetxek/adritian-free-hugo-theme"
@@ -147,9 +154,9 @@ target = "assets/css/bootstrap-print.css"
 [languages]
   [languages.en]
     disabled = false
-    languageCode = 'en'
-    languageDirection = 'ltr'
-    languageName = 'English'
+    locale = 'en'
+    direction = 'ltr'
+    label = 'English'
     title = ''
     weight = 0
 
@@ -195,9 +202,9 @@ target = "assets/css/bootstrap-print.css"
 
   [languages.es]
     disabled = false
-    languageCode = 'es'
-    languageDirection = 'ltr'
-    languageName = 'Español'
+    locale = 'es'
+    direction = 'ltr'
+    label = 'Español'
     title = ''
     weight = 0
       [[languages.es.menus.header]]
@@ -241,9 +248,9 @@ target = "assets/css/bootstrap-print.css"
 
   [languages.fr]
     disabled = false
-    languageCode = 'fr'
-    languageDirection = 'ltr'
-    languageName = 'Français'
+    locale = 'fr'
+    direction = 'ltr'
+    label = 'Français'
     title = ''
     weight = 0
 
@@ -357,14 +364,14 @@ Currently the theme content is spread over multiple folders and files. We are wo
 Some of the key files are:
 
 
-- `config.toml`: Main configuration for your Hugo site. Here you can set the site title, description, and theme specific settings such as:
+- `hugo.toml`: Main configuration for your Hugo site. Here you can set the site title, description, and theme specific settings such as:
     - menu structure (footer and header)
     - analytics (vercel, google)
     - blog settings (layout, sidebar contents, etc)
     - As well as some **required settings** for the theme to work properly (`module.mounts`, `params.plugins.css`)
 
 - `data/homepage.yml`: homepage structure, content and sections - including social links, and the hero section.
-- `assets/`: Where you can store static assets such as images, CSS, and JavaScript files (you can add custom CSS and JS files with the `params.plugins.css` in `config.toml`).
+- `assets/`: Where you can store static assets such as images, CSS, and JavaScript files (you can add custom CSS and JS files with the `params.plugins.css` in `hugo.toml`).
 - `content/`: This is where your content files will live. The theme-specific ones are:
     - `content/blog/`: For blog posts.
     - `content/portfolio/`: For portfolio items.
@@ -379,7 +386,7 @@ Some of the key files are:
 Hugo allows you to customize the theme in many ways. You can override the theme's layouts, styles, and content.
 For that, you just need to locate the file you would like to change, copy it to your site's corresponding folder (`layouts`, `assets`, ...), and edit it.
 
-**Note**: if you do this you will not benefit from theme updates, and that could lead to bugs. You can keep an eye on the [UPGRADING.md](https://github.com/zetxek/adritian-free-hugo-theme/blob/main/UPGRADING.md) file.
+**Note**: if you do this you will not benefit from theme updates, and that could lead to bugs. You can keep an eye on the [CHANGELOG.md](https://github.com/zetxek/adritian-free-hugo-theme/blob/main/CHANGELOG.md) file.
 
 ### Improving the theme
 
