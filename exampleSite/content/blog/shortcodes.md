@@ -14,6 +14,7 @@ Some of the example built-in shortcodes are Instagram posts, YouTube videos, QR 
 
 The theme provides custom shortcodes to allow you to customize your landing page as you want:
 
+- `toc`: Generates a styled table of contents from page headings.
 - `education-list`: Displays a list of educational qualifications.
 - `experience-list`: Shows a list of professional experiences.
 - `platform-links`: Embeds links to various platforms with icons.
@@ -24,25 +25,52 @@ The theme provides custom shortcodes to allow you to customize your landing page
 - `client-and-work-section`: Displays a section for clients and work.
 - `about-section`: About section, with image, buttons for call to action and image.
 - `testimonial-section`: Adds references from customers, colleagues, etc.
-- `showcase`: 
+- `showcase`: two-column block with a full-width image to the left, and a text snippet to the right. Great for a call to action or introduction of the person (assuming it's a personal website).
+- `text-section`: utility shortcode used to render text in some parts of the theme where it would otherwise be full-width, appearing "too floaty". See [the github issue #260 for context](https://github.com/zetxek/adritian-free-hugo-theme/issues/260).
+- `spacer`: Adds vertical spacing before the next element.
+- `responsive-image`: Renders a responsive `<picture>` element with WebP srcset and lazy loading.
+- `color-scheme-selector`: Displays the color scheme picker inline (requires `params.colorSchemeSwitcher.enable = true`).
 
 The shortcodes can be customized with different arguments:
+
+- `toc`: Automatically generates a table of contents from the page's headings (H2, H3, etc.)
+  - `heading`: Custom heading text for the table of contents. Defaults to "Table of Contents".
+  - `showHeading`: Boolean value to show or hide the heading. Defaults to true.
+  - `class`: Custom CSS class for styling. Defaults to "table-of-contents".
+  - **Features**:
+    - Only displays if the page contains headings
+    - Supports nested heading levels with proper indentation
+    - Responsive design with dark mode support
+    - Smooth scrolling to sections
+    - Clean, modern styling with hover effects
+  - **Usage Examples**:
+    - `{{</* toc */>}}`: Basic table of contents with default settings
+    - `{{</* toc heading="Contents" */>}}`: Custom heading
+    - `{{</* toc showHeading=false */>}}`: Hide the heading
+    - `{{</* toc class="sidebar-toc" */>}}`: Custom CSS class
+    - `{{</* toc heading="Article Contents" class="custom-toc" */>}}`: Multiple parameters
 
 - `education-list`:
   - `title`: The title of the education section.
   - `items`: A list of educational qualifications, they're provided by the `education` content type pages. From each, the `year`, `university`, and `degree` will be used.  
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `experience-list`:
-  - `title`: The title of the experience section.
+  - `title`: The title of the experience section (optional). When provided, an h2 heading is added above the list.
+  - `padding`: Controls whether the section has padding. Set to "true" by default.
   - `items`: A list of professional experiences, coming from the `experience` content type. For each of them, the `companyLogo`, `duration`, `jobTitle`, `location`, and `Content` are used.
+  - **Note**: On mobile devices, a separator line is automatically added between experience entries for better readability.
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `platform-links`:
   - `platforms`: A container to place social links inside. Usually you'll want to use it with a list of `link` nested (see below) 
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `link`: links to social platforms (facebook, linkedin, etc)
   - `url`: The URL for the hyperlink.
   - `icon`: The icon to display with the link.
-   
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
+
 - `newsletter-section`:
   - **Form Configuration**:
     - `form_action`: The URL where the newsletter form data will be submitted. Falls back to site data configuration (typically set in data/homepage.yaml).
@@ -55,10 +83,12 @@ The shortcodes can be customized with different arguments:
     - `newsletter_success_message`: Message displayed to users after successful subscription. Falls back to i18n value "newsletter_success_message".
     - `newsletter_error_message`: Message displayed to users if subscription fails. Falls back to i18n value "newsletter_error_message".
     - `newsletter_note`: Small text/disclaimer shown below the form (typically mentions privacy policy). Falls back to i18n value "newsletter_note".
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `experience-section`:
   - `title`: The title of the experience section.
   - `experiences`: A detailed list of experiences, coming from the `experience` content type pages.
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `contact-section`:
   - `title`: Sets the main heading/title for the contact section. Falls back to the i18n value "contact_title" if not provided.
@@ -68,7 +98,9 @@ The shortcodes can be customized with different arguments:
   - **Form Field Placeholders**:
     - `contact_form_name`: Placeholder text for the name input field. Falls back to i18n value.
     - `contact_form_email`: Placeholder text for the email input field. Falls back to i18n value.
+    - `contact_form_phone`: Placeholder text for the phone input field. Falls back to i18n value.
     - `contact_form_message`: Placeholder text for the message textarea. Falls back to i18n value.
+    - `contact_form_rows`: Number of rows for the message textarea. Defaults to 2 if not specified.
     - `contact_button`: Text for the form submission button. Falls back to i18n value.
   - **Contact Information**:
     - `contact_phone_title`: Heading for the phone contact section. Falls back to i18n value.
@@ -77,18 +109,19 @@ The shortcodes can be customized with different arguments:
     - `contact_email_email`: Email address to display. Falls back to i18n value.
     - `contact_address_title`: Heading for the address section. Falls back to i18n value.
     - `contact_address_address`: Physical address or location information. Falls back to i18n value.
-
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `client-and-work-section`: this shortcode doesn't use as many arguments - as much of the content comes from other content pages.
   - `title`: The title of the client and work section.
   - `clients`: A list of clients, coming from the `client` content type (each with `title`, `link`, `logo`)
   - `projects`: A list of projects, coming from the `project` content type (each with `title`, `content`, `button.URL`, `button.btnText`, `button.icon`, `image`).
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `about-section`:
   - Content Arguments
-    - `intro_title` - Sets the main heading/title for the about section. Falls back to the title from site data if not provided.
+    - `title` - Sets the heading text for the about section. Falls back to the i18n value `about_title` if not provided.
 
-    - `intro_description` - Contains the HTML content or description text for the about section. Falls back to the content from site data if not provided.
+    - `content` - HTML content for the about section body. Falls back to the i18n value `about_content` if not provided.
 
     - `imgSrc` - Specifies the path to the image displayed in the about section. Falls back to the image defined in site data if not provided.
 
@@ -96,25 +129,25 @@ The shortcodes can be customized with different arguments:
 
     - `imgHeight` - Specifies the height for the image.
 
-    - `imgScale` - Specifies the scale used for the image (for example, `0.5` if the high resolution image is double the size of the smaller one) This is only considered if neither imgWidth nor imgHeight is used.
+    - `imgScale` - Specifies the scale used for the image (for example, `0.5` if the high resolution image is double the size of the smaller one). Only considered if neither `imgWidth` nor `imgHeight` is used.
 
-    - Primary Button Arguments
-      - `button1_enable` - Boolean value to show or hide the primary button. Defaults to the value from site data.
+    - `headingLevel` - Controls the HTML heading tag used for the section title. Accepts `"1"` through `"6"`. Defaults to `"2"` (`<h2>`), which is correct when the page already has an `<h1>` (e.g. a preceding `showcase-section`). Set to `"1"` if this is the first or only heading on the page to maintain a valid heading hierarchy.
 
-      - `button1_icon` - icon class to display before the button text. Falls back to the icon from site data.
+    - `v_align` - Controls the vertical alignment of the text content relative to the image. Accepts `"center"` (default), `"top"`, or `"bottom"`.
+    - `text_align` - **Deprecated**: Use `v_align` instead. Maintains backwards compatibility.
+    - `h_align` - Controls the horizontal alignment of the text content. Accepts `"left"` (default), `"center"`, or `"right"`.
 
-      - `button1_url` - Target URL for the primary button. Falls back to the URL from site data.
+    **Alignment Examples**:
+    - `v_align="center" h_align="left"` - Text vertically centered, left-aligned (default)
+    - `v_align="top" h_align="center"` - Text at top, horizontally centered
+    - `v_align="bottom" h_align="right"` - Text at bottom, right-aligned
 
-      - `button1_text` - Text label to display on the primary button. Falls back to the text from site data.
+    - Button Arguments
+      - `button_icon` - Icon class to display before the button text. Falls back to site data.
+      - `button_url` - Target URL for the button. Falls back to site data.
+      - `button_text` - Text label for the button. Falls back to the i18n value `about_button`. Leave empty to hide the button.
 
-    - Secondary Button Arguments
-      - `button2_enable` - Boolean value to show or hide the secondary button. Defaults to the value from site data.
-
-      - `button2_icon` - FontAwesome or icon class to display before the button text. Falls back to the icon from site data.
-
-      - `button2_url` - Target URL for the secondary button. Falls back to the URL from site data.
-
-      - `button2_text` - Text label to display on the secondary button. Falls back to the text from site data.
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id (`about`) is used.
 
   - `testimonial-section`:
     - `title`: The title of the testimonial section.
@@ -124,8 +157,7 @@ The shortcodes can be customized with different arguments:
         - `name`: The name of the person giving the testimonial
         - `position`: The job title or role of the person giving the testimonial
         - `image.src`: Path to the image of the testimonial author
-
-
+    - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
 
 - `showcase`: 
   - **Content Arguments**:
@@ -141,10 +173,69 @@ The shortcodes can be customized with different arguments:
     - `imgWidth` - Specifies the width for the image.
     - `imgHeight` - Specifies the height for the image.
     - `imgScale` - Specifies the scale used for the image (for example, `0.5` if the high resolution image is double the size of the smaller one) This is only considered if neither imgWidth nor imgHeight is used.
+    - `imgShape` - Optional. Clips the image to a predefined shape. Accepted values: `circle` (circular crop, `aspect-ratio: 1:1`) or `rounded` (softly rounded corners). Omit to keep the default rectangular display. Can also be set via `data/homepage.yaml` under `showcase.image.shape`.
   - **Social Media**:
     - `social_links`: Array of social media platform links to display at the bottom of the showcase. Each item should have a URL and icon property.
+  - **Responsive Behavior**:
+    - The showcase uses a two-column layout on desktop devices (≥768px) and stacks columns vertically on mobile devices, with the image appearing above the text content.
   - **Inner Content**:
     - The shortcode can also accept inner content that will be rendered in a separate div with class "inner-content".
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
+
+- `text-section`: 
+  - **Content Arguments**:
+    - `title`: Sets the main heading/title for the text section (optional).
+    - `subtitle`: Sets the subtitle text that appears below the main heading (optional).
+  - **Layout Options**:
+    - `padding`: Controls whether the section has padding. Set to "true" by default.
+    - `centered`: When set to "true", adds flexbox classes to center the content both horizontally and vertically. Set to "false" by default.
+  - **Inner Content**:
+    - The shortcode accepts markdown-formatted inner content that will be rendered in the text section.
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
+
+- `spacer`: 
+  - **Size Options**:
+    - `size`: Controls the amount of vertical spacing. Accepts "small", "medium" (default), "large", or "xlarge".
+  - **Usage Examples**:
+    - `{{</* spacer */>}}`: Adds medium spacing (default)
+    - `{{</* spacer size="small" */>}}`: Adds minimal spacing
+    - `{{</* spacer size="large" */>}}`: Adds substantial spacing
+    - `{{</* spacer size="xlarge" */>}}`: Adds maximum spacing
+  - `sectionId`: Optional. Overrides the default HTML id for the section. If not provided, the default id is used.
+
+- `responsive-image`:
+  - **Parameters**:
+    - `src`: Path to the image (required). Use a path relative to the `assets/` directory for full Hugo Pipes processing (WebP conversion + srcset). Static-path or external URLs fall back to a plain `<img>` with `loading="lazy"`.
+    - `alt`: Alt text for the image. Defaults to empty string.
+    - `class`: CSS class(es) to add to the `<img>` element.
+    - `sizes`: The `sizes` attribute for the browser's layout hint. Defaults to `"100vw"`.
+  - **How it works**:
+    - For images in `assets/`: generates a `<picture>` element with two `<source>` elements — one WebP srcset and one original-format srcset — at 400w, 800w, and 1200w (only up to the original image width to avoid upscaling). Includes `width`/`height` attributes on the `<img>` to prevent Cumulative Layout Shift (CLS).
+    - For images in `static/` or external URLs: renders a plain `<img loading="lazy" decoding="async">` with no processing.
+  - **Usage Examples**:
+    - `{{</* responsive-image src="images/photo.jpg" alt="A photo" */>}}`: Basic usage with an assets image
+    - `{{</* responsive-image src="images/hero.png" alt="Hero" sizes="(max-width: 768px) 100vw, 600px" */>}}`: Custom sizes hint
+    - `{{</* responsive-image src="images/cover.jpg" alt="Cover" class="my-image rounded" */>}}`: With CSS classes
+
+  Example output for an `assets/` image:
+
+  ```html
+  <picture>
+    <source type="image/webp" srcset="/images/photo_400.webp 400w, /images/photo_800.webp 800w" sizes="100vw">
+    <source type="image/jpeg" srcset="/images/photo_400.jpg 400w, /images/photo_800.jpg 800w" sizes="100vw">
+    <img src="/images/photo_800.jpg" width="800" height="600" alt="A photo" loading="lazy" decoding="async">
+  </picture>
+  ```
+
+### `color-scheme-selector`
+
+Renders the color scheme picker inline in any page or blog post. The picker is only rendered when `params.colorSchemeSwitcher.enable = true` in the site config.
+
+**Usage**: `{{</* color-scheme-selector */>}}`
+
+**Live example** (switch the color scheme here):
+
+{{< color-scheme-selector >}}
 
 You can see them in effect in:
 - [the homepage](/) [`(see source)`](https://raw.githubusercontent.com/zetxek/adritian-demo/refs/heads/main/content/home.md).
